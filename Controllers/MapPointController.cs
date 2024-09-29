@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Configuration;
+using Microsoft.AspNetCore.Mvc;
 using MinecraftTrackerApp.DA.MapPoint;
 using MinecraftTrackerObjects;
 
@@ -10,8 +11,15 @@ namespace MinecraftTrackerApp.Controllers
     [ApiController]
     public class MapPointController : ControllerBase
     {
-        MapPointDA mpDA = new MapPointDA("Server=minecraft.cpesk00qmvaq.us-east-1.rds.amazonaws.com;Database=Minecraft;User Id=admin;Password=FlnJhLbAqs8Ij0VLtRCO;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+        private readonly IConfiguration _configuration;
+        MapPointDA mpDA;
 
+        public MapPointController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+            mpDA = new MapPointDA(connectionString);
+        }
 
         // GET api/<MapPointController>/5
         [HttpGet("GetAllPoints")]
