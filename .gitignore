@@ -19,7 +19,6 @@ Properties/
 .vscode/
 .vs/
 .idea/
-appsettings.json
 
 # Rider IDE files
 .idea/
